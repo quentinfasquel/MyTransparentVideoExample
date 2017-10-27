@@ -12,6 +12,9 @@
 		667F4C831FA3068900F9A900 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667F4C811FA3068900F9A900 /* Main.storyboard */; };
 		667F4C851FA3068900F9A900 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667F4C841FA3068900F9A900 /* Assets.xcassets */; };
 		667F4C881FA3068900F9A900 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667F4C861FA3068900F9A900 /* LaunchScreen.storyboard */; };
+		667F4C901FA3071A00F9A900 /* AVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */; };
+		667F4C921FA3126A00F9A900 /* AlphaFrameFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F4C911FA3126A00F9A900 /* AlphaFrameFilter.swift */; };
+		6690684B1FA3656B00598D4C /* playdoh-bat.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		667F4C841FA3068900F9A900 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		667F4C871FA3068900F9A900 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		667F4C891FA3068900F9A900 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerView.swift; sourceTree = "<group>"; };
+		667F4C911FA3126A00F9A900 /* AlphaFrameFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaFrameFilter.swift; sourceTree = "<group>"; };
+		6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "playdoh-bat.mp4"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,9 @@
 		667F4C7C1FA3068900F9A900 /* MyTransparentVideoExample */ = {
 			isa = PBXGroup;
 			children = (
+				6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */,
+				667F4C911FA3126A00F9A900 /* AlphaFrameFilter.swift */,
+				667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */,
 				667F4C7D1FA3068900F9A900 /* AppDelegate.swift */,
 				667F4C7F1FA3068900F9A900 /* ViewController.swift */,
 				667F4C811FA3068900F9A900 /* Main.storyboard */,
@@ -124,6 +133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				667F4C881FA3068900F9A900 /* LaunchScreen.storyboard in Resources */,
+				6690684B1FA3656B00598D4C /* playdoh-bat.mp4 in Resources */,
 				667F4C851FA3068900F9A900 /* Assets.xcassets in Resources */,
 				667F4C831FA3068900F9A900 /* Main.storyboard in Resources */,
 			);
@@ -136,6 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				667F4C901FA3071A00F9A900 /* AVPlayerView.swift in Sources */,
+				667F4C921FA3126A00F9A900 /* AlphaFrameFilter.swift in Sources */,
 				667F4C801FA3068900F9A900 /* ViewController.swift in Sources */,
 				667F4C7E1FA3068900F9A900 /* AppDelegate.swift in Sources */,
 			);
