@@ -17,14 +17,14 @@ class ViewController: UIViewController {
     let videoSize = CGSize(width: 300, height: 300)
     let playerView = AVPlayerView(frame: CGRect(origin: .zero, size: videoSize))
     view.addSubview(playerView)
-    
+
     // Use Auto Layout anchors to center our playerView
     playerView.translatesAutoresizingMaskIntoConstraints = false
     playerView.widthAnchor.constraint(equalToConstant: videoSize.width).isActive = true
     playerView.heightAnchor.constraint(equalToConstant: videoSize.height).isActive = true
     playerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     playerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    
+
     // Setup our playerLayer to hold a pixel buffer format with "alpha"
     let playerLayer: AVPlayerLayer = playerView.playerLayer
     playerLayer.pixelBufferAttributes = [
@@ -38,19 +38,17 @@ class ViewController: UIViewController {
     playerView.isLoopingEnabled = true
     
     // Load our player item
-    let videoUrl: URL = Bundle.main.url(forResource: "playdoh-bat", withExtension: "mp4")!
-    playerView.loadVideo(from: videoUrl) { [weak self] playerItem, error in
-      guard let playerItem = playerItem, error == nil else {
+    let itemUrl: URL = Bundle.main.url(forResource: "playdoh-bat", withExtension: "mp4")!
+    let playerItem = createTransparentItem(url: itemUrl)
+
+    playerView.loadVideo(playerItem) { [weak self] player, error in
+      guard let player = player, error == nil else {
         return print("Something went wrong when loading our video", error!)
       }
 
-      // Set the video so that seeking also renders with transparency
-      playerItem.seekingWaitsForVideoCompositionRendering = true
-      // Apply a video composition (which applies our custom filter)
-      playerItem.videoComposition = self?.createVideoComposition(for: playerItem)
       // Finally, we can start playing
-      playerView.player?.play()
-     
+      player.play()
+
       self?.animateBackgroundColor()
     }
   }
@@ -60,9 +58,23 @@ class ViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
 
-  func createVideoComposition(for playerItem: AVPlayerItem) -> AVVideoComposition {
-    let videoSize = CGSize(width: playerItem.presentationSize.width, height: playerItem.presentationSize.height / 2.0)
-    let composition = AVMutableVideoComposition(asset: playerItem.asset, applyingCIFiltersWithHandler: { request in
+  // MARK: - Player Item Configuration
+    
+  func createTransparentItem(url: URL) -> AVPlayerItem {
+    let asset = AVAsset(url: url)
+    let playerItem = AVPlayerItem(asset: asset)
+    // Set the video so that seeking also renders with transparency
+    playerItem.seekingWaitsForVideoCompositionRendering = true
+    // Apply a video composition (which applies our custom filter)
+    playerItem.videoComposition = createVideoComposition(for: asset)
+
+    return playerItem
+  }
+  
+  func createVideoComposition(for asset: AVAsset) -> AVVideoComposition {
+    let videoTrack = asset.tracks(withMediaType: .video).first!
+    let videoSize = CGSize(width: videoTrack.naturalSize.width, height: videoTrack.naturalSize.height / 2.0)
+    let composition = AVMutableVideoComposition(asset: asset, applyingCIFiltersWithHandler: { request in
       let sourceRect = CGRect(origin: .zero, size: videoSize)
       let alphaRect = sourceRect.offsetBy(dx: 0, dy: sourceRect.height)
       let filter = AlphaFrameFilter()
@@ -75,7 +87,9 @@ class ViewController: UIViewController {
     composition.renderSize = videoSize
     return composition
   }
-  
+    
+  // MARK: - Background Color
+    
   var backgroundColors: [UIColor] = [.purple, .blue, .cyan, .green, .yellow, .orange, .red]
 
   // Infinite animation

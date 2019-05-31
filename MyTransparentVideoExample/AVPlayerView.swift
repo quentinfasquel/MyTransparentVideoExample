@@ -35,11 +35,10 @@ class AVPlayerView: UIView {
     }
   }
   
-  var onReadyCallback: ((AVPlayerItem?, Error?) -> Void)? = nil
+  var onReadyCallback: ((AVPlayer?, Error?) -> Void)? = nil
 
-  func loadVideo(from fileUrl: URL, onReady: ((AVPlayerItem?, Error?) -> Void)? = nil) {
+  func loadVideo(_ playerItem: AVPlayerItem, onReady: ((AVPlayer?, Error?) -> Void)? = nil) {
     self.onReadyCallback = onReady
-    let playerItem = AVPlayerItem(url: fileUrl)
     self.player = AVPlayer(playerItem: playerItem)
     self.playerItem = playerItem
   }
@@ -90,9 +89,9 @@ class AVPlayerView: UIView {
 
     switch playerItem.status {
     case .readyToPlay:
-      onReadyCallback?(playerItem, nil)
+      onReadyCallback?(player, nil)
     case .failed:
-      onReadyCallback?(playerItem, playerItem.error)
+      onReadyCallback?(player, playerItem.error)
     default: break
     }
     
