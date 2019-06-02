@@ -74,7 +74,7 @@ class AVPlayerView: UIView {
 
     didPlayToEndTimeObsever = NotificationCenter.default.addObserver(
       forName: .AVPlayerItemDidPlayToEndTime, object: playerItem, queue: nil, using: { _ in
-        player.seek(to: kCMTimeZero) { _ in
+        player.seek(to: CMTime.zero) { _ in
           player.play()
         }
     })

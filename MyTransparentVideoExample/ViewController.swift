@@ -99,7 +99,7 @@ class ViewController: UIViewController {
       delay: 0.0,
       options: [],
       animations: {
-        let colorIndex = self.backgroundColors.index(of: self.view.backgroundColor!) ?? 0
+        let colorIndex = self.backgroundColors.firstIndex(of: self.view.backgroundColor!) ?? 0
         let countColors = self.backgroundColors.count
         self.view.backgroundColor = self.backgroundColors[(colorIndex + 1) % countColors]
     }, completion: { _ in
