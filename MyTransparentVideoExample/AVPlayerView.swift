@@ -9,38 +9,59 @@
 import AVFoundation
 import UIKit
 
-class AVPlayerView: UIView {
+public class AVPlayerView: UIView {
     
     deinit {
-        self.playerItem = nil
+        playerItem = nil
     }
     
-    override class var layerClass: AnyClass {
+    public override class var layerClass: AnyClass {
         return AVPlayerLayer.self
     }
     
-    var playerLayer: AVPlayerLayer { return layer as! AVPlayerLayer }
-    var player: AVPlayer? {
+    public var playerLayer: AVPlayerLayer {
+        return layer as! AVPlayerLayer
+    }
+
+    public private(set) var player: AVPlayer? {
         set { playerLayer.player = newValue }
         get { return playerLayer.player }
     }
     
-    var playerItem: AVPlayerItem? = nil {
-        willSet { playerItem?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status)) }
+    private var playerItemStatusObserver: NSKeyValueObservation?
+
+    private(set) var playerItem: AVPlayerItem? = nil {
         didSet {
-            //
-            playerItem?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: .new, context: nil)
             // If `isLoopingEnabled` is called before the AVPlayer was set
             setupLooping()
         }
     }
     
-    var onReadyCallback: ((AVPlayer?, Error?) -> Void)? = nil
-    
-    func loadVideo(_ playerItem: AVPlayerItem, onReady: ((AVPlayer?, Error?) -> Void)? = nil) {
-        self.onReadyCallback = onReady
-        self.player = AVPlayer(playerItem: playerItem)
+    public func loadPlayerItem(_ playerItem: AVPlayerItem, onReady: ((Result<AVPlayer, Error>) -> Void)? = nil) {
+        let player = AVPlayer(playerItem: playerItem)
+
+        self.player = player
         self.playerItem = playerItem
+
+        guard let completion = onReady else {
+            playerItemStatusObserver = nil
+            return
+        }
+
+        playerItemStatusObserver = playerItem.observe(\.status) { [weak self] item, _ in
+            switch item.status {
+            case .failed:
+                completion(.failure(item.error!))
+            case .readyToPlay:
+                completion(.success(player))
+                // Stop observing
+                self?.playerItemStatusObserver = nil
+            case .unknown:
+                break
+            @unknown default:
+                fatalError()
+            }
+        }
     }
     
     // MARK: - Looping Handler
@@ -78,24 +99,5 @@ class AVPlayerView: UIView {
                     player.play()
                 }
         })
-    }
-    
-    // MARK: Key Value Observing
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        guard let playerItem = object as? AVPlayerItem, playerItem === self.playerItem else {
-            return super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
-        
-        switch playerItem.status {
-        case .readyToPlay:
-            onReadyCallback?(player, nil)
-        case .failed:
-            onReadyCallback?(player, playerItem.error)
-        default: break
-        }
-        
-        // Unregister our callback
-        onReadyCallback = nil
     }
 }
