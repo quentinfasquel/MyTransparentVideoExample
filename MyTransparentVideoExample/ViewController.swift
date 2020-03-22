@@ -84,7 +84,12 @@ class ViewController: UIViewController {
                 .cropped(to: alphaRect)
                 .transformed(by: CGAffineTransform(translationX: 0, y: -sourceRect.height))
             filter.maskImage = request.sourceImage.cropped(to: sourceRect)
-            return request.finish(with: filter.outputImage!, context: nil)
+
+            guard let outputImage = filter.outputImage else {
+                return request.finish(with: filter.outputError ?? AlphaFrameFilterError.unknown)
+            }
+
+            return request.finish(with: outputImage, context: nil)
         })
 
         composition.renderSize = videoSize
