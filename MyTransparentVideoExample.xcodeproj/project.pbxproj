@@ -309,12 +309,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H9EZHJZX4M;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CI_SILENCE_GL_DEPRECATION,
+				);
 				INFOPLIST_FILE = MyTransparentVideoExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTLLINKER_FLAGS = "-cikernel";
 				MTL_COMPILER_FLAGS = "-fcikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quentinfasquel.MyTransparentVideoExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG CI_SILENCE_GL_DEPRECATION";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -326,6 +331,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H9EZHJZX4M;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					CI_SILENCE_GL_DEPRECATION,
+				);
 				INFOPLIST_FILE = MyTransparentVideoExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTLLINKER_FLAGS = "-cikernel";

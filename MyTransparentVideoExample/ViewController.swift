@@ -8,6 +8,7 @@
 
 import AVFoundation
 import UIKit
+import os.log
 
 class ViewController: UIViewController {
     
@@ -74,13 +75,14 @@ class ViewController: UIViewController {
     }
     
     func createVideoComposition(for asset: AVAsset) -> AVVideoComposition {
-        let filter = AlphaFrameFilter()
+        let filter = AlphaFrameFilter(renderingMode: .builtInFilter)
         let composition = AVMutableVideoComposition(asset: asset, applyingCIFiltersWithHandler: { request in
             do {
                 let (inputImage, maskImage) = request.sourceImage.verticalSplit()
                 let outputImage = try filter.process(inputImage, mask: maskImage)
                 return request.finish(with: outputImage, context: nil)
             } catch {
+                os_log("Video composition error: %s", String(describing: error))
                 return request.finish(with: error)
             }
         })
