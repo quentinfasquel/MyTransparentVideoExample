@@ -11,19 +11,11 @@ import CoreImage
 typealias AlphaFrameFilterError = AlphaFrameFilter.Error
 
 final class AlphaFrameFilter: CIFilter {
-        
-    private static var kernel: CIColorKernel? = {
-        return CIColorKernel(source:"""
-kernel vec4 alphaFrame(__sample s, __sample m) {
-  return vec4( s.rgb, m.r );
-}
-""")
-    }()
 
     enum Error: Swift.Error {
-        case invalidKernel
-        case missingInputImage
         case incompatibleExtents
+        case invalidColorKernel
+        case invalidParameters
         case unknown
     }
     
@@ -32,15 +24,9 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
     private(set) var outputError: Error?
     
     override var outputImage: CIImage? {
-        // Force a fatal error if our kernel source isn't correct
-        guard let kernel = AlphaFrameFilter.kernel else {
-            outputError = .invalidKernel
-            return nil
-        }
-
         // Output is nil if an input image and a mask image aren't provided
         guard let inputImage = inputImage, let maskImage = maskImage else {
-            outputError = .missingInputImage
+            outputError = .invalidParameters
             return nil
         }
 
@@ -52,10 +38,7 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
 
         outputError = nil
 
-        // Apply our color kernel with the proper parameters
-        let outputExtent = inputImage.extent
-        let arguments = [inputImage, maskImage]
-        return kernel.apply(extent: outputExtent, arguments: arguments)
+        return process(renderingMode: .colorKernel, inputImage: inputImage, maskImage: maskImage)
     }
     
     func process(_ inputImage: CIImage, mask maskImage: CIImage) throws -> CIImage {
@@ -67,5 +50,35 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
         }
 
         return outputImage
+    }
+    
+    // MARK: - Processing
+    
+    private enum RenderingMode {
+        case colorKernel
+    }
+    
+    private static var colorKernel: CIColorKernel? = {
+        return CIColorKernel(source: """
+kernel vec4 alphaFrame(__sample s, __sample m) {
+    return vec4( s.rgb, m.r );
+}
+""")
+    }()
+
+    private func process(renderingMode: RenderingMode, inputImage: CIImage, maskImage: CIImage) -> CIImage? {
+        switch renderingMode {
+        case .colorKernel:
+            // Force a fatal error if our kernel source isn't correct
+            guard let colorKernel = Self.colorKernel else {
+                outputError = .invalidColorKernel
+                return nil
+            }
+
+            // Apply our color kernel with the proper parameters
+            let outputExtent = inputImage.extent
+            let arguments = [inputImage, maskImage]
+            return colorKernel.apply(extent: outputExtent, arguments: arguments)
+        }
     }
 }
