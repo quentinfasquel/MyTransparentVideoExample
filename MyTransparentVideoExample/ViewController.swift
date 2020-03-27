@@ -14,10 +14,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let videoSize = CGSize(width: 300, height: 300)
+        let videoSize = CGSize(width: 300, height: 187)
         let playerView = AVPlayerView(frame: CGRect(origin: .zero, size: videoSize))
         view.addSubview(playerView)
-        
+
         // Use Auto Layout anchors to center our playerView
         playerView.translatesAutoresizingMaskIntoConstraints = false
         playerView.widthAnchor.constraint(equalToConstant: videoSize.width).isActive = true
@@ -74,8 +74,7 @@ class ViewController: UIViewController {
     }
     
     func createVideoComposition(for asset: AVAsset) -> AVVideoComposition {
-        let videoTrack = asset.tracks(withMediaType: .video).first!
-        let videoSize = videoTrack.naturalSize.applying(CGAffineTransform(scaleX: 1.0, y: 0.5))
+        let videoSize = asset.videoSize.applying(CGAffineTransform(scaleX: 1.0, y: 0.5))
         let composition = AVMutableVideoComposition(asset: asset, applyingCIFiltersWithHandler: { request in
             let sourceRect = CGRect(origin: .zero, size: videoSize)
             let alphaRect = sourceRect.offsetBy(dx: 0, dy: sourceRect.height)
