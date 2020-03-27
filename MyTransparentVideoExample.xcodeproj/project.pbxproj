@@ -17,6 +17,8 @@
 		6690684B1FA3656B00598D4C /* playdoh-bat.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */; };
 		669678FB242E7BF00085D444 /* AVAsset+VideoSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669678FA242E7BF00085D444 /* AVAsset+VideoSize.swift */; };
 		669678FD242E7CFB0085D444 /* CIImage+VerticalSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */; };
+		66E0467A242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */; };
+		66E0467B242E85320096DEE5 /* AlphaFrameFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "playdoh-bat.mp4"; sourceTree = "<group>"; };
 		669678FA242E7BF00085D444 /* AVAsset+VideoSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAsset+VideoSize.swift"; sourceTree = "<group>"; };
 		669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+VerticalSplit.swift"; sourceTree = "<group>"; };
+		66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIKernel+DefaultMetalLibrary.swift"; sourceTree = "<group>"; };
+		66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AlphaFrameFilter.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,11 +69,13 @@
 			isa = PBXGroup;
 			children = (
 				6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */,
+				66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */,
 				667F4C911FA3126A00F9A900 /* AlphaFrameFilter.swift */,
 				669678FA242E7BF00085D444 /* AVAsset+VideoSize.swift */,
 				667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */,
 				667F4C7D1FA3068900F9A900 /* AppDelegate.swift */,
 				669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */,
+				66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */,
 				667F4C7F1FA3068900F9A900 /* ViewController.swift */,
 				667F4C811FA3068900F9A900 /* Main.storyboard */,
 				667F4C841FA3068900F9A900 /* Assets.xcassets */,
@@ -156,8 +162,10 @@
 				669678FB242E7BF00085D444 /* AVAsset+VideoSize.swift in Sources */,
 				667F4C901FA3071A00F9A900 /* AVPlayerView.swift in Sources */,
 				667F4C921FA3126A00F9A900 /* AlphaFrameFilter.swift in Sources */,
+				66E0467A242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift in Sources */,
 				667F4C801FA3068900F9A900 /* ViewController.swift in Sources */,
 				669678FD242E7CFB0085D444 /* CIImage+VerticalSplit.swift in Sources */,
+				66E0467B242E85320096DEE5 /* AlphaFrameFilter.metal in Sources */,
 				667F4C7E1FA3068900F9A900 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +311,8 @@
 				DEVELOPMENT_TEAM = H9EZHJZX4M;
 				INFOPLIST_FILE = MyTransparentVideoExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quentinfasquel.MyTransparentVideoExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -318,6 +328,8 @@
 				DEVELOPMENT_TEAM = H9EZHJZX4M;
 				INFOPLIST_FILE = MyTransparentVideoExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTLLINKER_FLAGS = "-cikernel";
+				MTL_COMPILER_FLAGS = "-fcikernel";
 				PRODUCT_BUNDLE_IDENTIFIER = com.quentinfasquel.MyTransparentVideoExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

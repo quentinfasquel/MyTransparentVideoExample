@@ -14,31 +14,31 @@ final class AlphaFrameFilter: CIFilter {
 
     enum Error: Swift.Error {
         case incompatibleExtents
-        case invalidColorKernel
+        case invalidKernel
         case invalidParameters
         case unknown
     }
     
     private(set) var inputImage: CIImage?
     private(set) var maskImage: CIImage?
-    private(set) var outputError: Error?
+    private(set) var outputError: Swift.Error?
     
     override var outputImage: CIImage? {
         // Output is nil if an input image and a mask image aren't provided
         guard let inputImage = inputImage, let maskImage = maskImage else {
-            outputError = .invalidParameters
+            outputError = Error.invalidParameters
             return nil
         }
 
         // Input image & mask image should have the same extent
         guard inputImage.extent == maskImage.extent else {
-            outputError = .incompatibleExtents
+            outputError = Error.incompatibleExtents
             return nil
         }
 
         outputError = nil
 
-        return process(renderingMode: .colorKernel, inputImage: inputImage, maskImage: maskImage)
+        return render(using: .metalKernel, inputImage: inputImage, maskImage: maskImage)
     }
     
     func process(_ inputImage: CIImage, mask maskImage: CIImage) throws -> CIImage {
@@ -46,16 +46,17 @@ final class AlphaFrameFilter: CIFilter {
         self.maskImage = maskImage
         
         guard let outputImage = self.outputImage else {
-            throw outputError ?? .unknown
+            throw outputError ?? Error.unknown
         }
 
         return outputImage
     }
     
-    // MARK: - Processing
+    // MARK: - Rendering
     
     private enum RenderingMode {
         case colorKernel
+        case metalKernel
     }
     
     private static var colorKernel: CIColorKernel? = {
@@ -65,13 +66,19 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
 }
 """)
     }()
+    
+    private static var metalKernelError: Swift.Error?
+    private static var metalKernel: CIKernel? = {
+        do { return try CIKernel(functionName: "alphaFrame") }
+        catch { metalKernelError = error; return nil }
+    }()
 
-    private func process(renderingMode: RenderingMode, inputImage: CIImage, maskImage: CIImage) -> CIImage? {
+    private func render(using renderingMode: RenderingMode, inputImage: CIImage, maskImage: CIImage) -> CIImage? {
         switch renderingMode {
         case .colorKernel:
             // Force a fatal error if our kernel source isn't correct
             guard let colorKernel = Self.colorKernel else {
-                outputError = .invalidColorKernel
+                outputError = Error.invalidKernel
                 return nil
             }
 
@@ -79,6 +86,17 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
             let outputExtent = inputImage.extent
             let arguments = [inputImage, maskImage]
             return colorKernel.apply(extent: outputExtent, arguments: arguments)
+
+        case .metalKernel:
+            guard let metalKernel = Self.metalKernel else {
+                outputError = Self.metalKernelError ?? Error.invalidKernel
+                return nil
+            }
+
+            let outputExtent = inputImage.extent
+            let roiCallback: CIKernelROICallback = { _, rect in rect }
+            let arguments = [inputImage, maskImage]
+            return metalKernel.apply(extent: outputExtent, roiCallback: roiCallback, arguments: arguments)
         }
     }
 }
