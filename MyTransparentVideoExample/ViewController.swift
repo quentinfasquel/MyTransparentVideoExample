@@ -74,24 +74,18 @@ class ViewController: UIViewController {
     }
     
     func createVideoComposition(for asset: AVAsset) -> AVVideoComposition {
-        let videoSize = asset.videoSize.applying(CGAffineTransform(scaleX: 1.0, y: 0.5))
+        let filter = AlphaFrameFilter()
         let composition = AVMutableVideoComposition(asset: asset, applyingCIFiltersWithHandler: { request in
-            let sourceRect = CGRect(origin: .zero, size: videoSize)
-            let alphaRect = sourceRect.offsetBy(dx: 0, dy: sourceRect.height)
-            let filter = AlphaFrameFilter()
-            filter.inputImage = request.sourceImage
-                .cropped(to: alphaRect)
-                .transformed(by: CGAffineTransform(translationX: 0, y: -sourceRect.height))
-            filter.maskImage = request.sourceImage.cropped(to: sourceRect)
-
-            guard let outputImage = filter.outputImage else {
-                return request.finish(with: filter.outputError ?? AlphaFrameFilterError.unknown)
+            do {
+                let (inputImage, maskImage) = request.sourceImage.verticalSplit()
+                let outputImage = try filter.process(inputImage, mask: maskImage)
+                return request.finish(with: outputImage, context: nil)
+            } catch {
+                return request.finish(with: error)
             }
-
-            return request.finish(with: outputImage, context: nil)
         })
 
-        composition.renderSize = videoSize
+        composition.renderSize = asset.videoSize.applying(CGAffineTransform(scaleX: 1.0, y: 0.5))
         return composition
     }
     

@@ -10,7 +10,8 @@ import CoreImage
 
 typealias AlphaFrameFilterError = AlphaFrameFilter.Error
 
-class AlphaFrameFilter: CIFilter {
+final class AlphaFrameFilter: CIFilter {
+        
     private static var kernel: CIColorKernel? = {
         return CIColorKernel(source:"""
 kernel vec4 alphaFrame(__sample s, __sample m) {
@@ -22,12 +23,12 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
     enum Error: Swift.Error {
         case invalidKernel
         case missingInputImage
+        case incompatibleExtents
         case unknown
     }
     
-    var inputImage: CIImage?
-    var maskImage: CIImage?
-    
+    private(set) var inputImage: CIImage?
+    private(set) var maskImage: CIImage?
     private(set) var outputError: Error?
     
     override var outputImage: CIImage? {
@@ -42,10 +43,29 @@ kernel vec4 alphaFrame(__sample s, __sample m) {
             outputError = .missingInputImage
             return nil
         }
-        
+
+        // Input image & mask image should have the same extent
+        guard inputImage.extent == maskImage.extent else {
+            outputError = .incompatibleExtents
+            return nil
+        }
+
         outputError = nil
+
         // Apply our color kernel with the proper parameters
-        let args = [inputImage as AnyObject, maskImage as AnyObject]
-        return kernel.apply(extent: inputImage.extent, arguments: args)
+        let outputExtent = inputImage.extent
+        let arguments = [inputImage, maskImage]
+        return kernel.apply(extent: outputExtent, arguments: arguments)
+    }
+    
+    func process(_ inputImage: CIImage, mask maskImage: CIImage) throws -> CIImage {
+        self.inputImage = inputImage
+        self.maskImage = maskImage
+        
+        guard let outputImage = self.outputImage else {
+            throw outputError ?? .unknown
+        }
+
+        return outputImage
     }
 }
