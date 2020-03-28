@@ -31,6 +31,11 @@ struct PlayerView: UIViewRepresentable {
         let playerLayer = playerView.playerLayer
         playerLayer.pixelBufferAttributes = isTransparent
             ? Self.transparentPixelBufferAttributes : nil
+        
+        if let rate = player?.rate, rate > 0 {
+            player?.pause()
+            player?.play()
+        }
     }
 }
 
