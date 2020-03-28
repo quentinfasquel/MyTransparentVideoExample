@@ -10,11 +10,11 @@ import AVFoundation
 import SwiftUI
 
 struct PlayerView: UIViewRepresentable {
-    @State var player: AVPlayer?
-    @State var isTransparent: Bool = false
+    var player: AVPlayer?
+    var isTransparent: Bool = false
 
     private static var transparentPixelBufferAttributes: [String: Any] {
-        [kCVPixelBufferPixelFormatTypeKey as String: kCMPixelFormat_32BGRA]
+        [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
     }
     
     func makeUIView(context: UIViewRepresentableContext<PlayerView>) -> AVPlayerView {
@@ -22,20 +22,10 @@ struct PlayerView: UIViewRepresentable {
     }
 
     func updateUIView(_ playerView: AVPlayerView, context: UIViewRepresentableContext<PlayerView>) {
-        if let player = self.player {
-            playerView.setPlayer(player)
-        } else {
-            playerView.removePlayer()
-        }
+        playerView.player = player
 
-        let playerLayer = playerView.playerLayer
-        playerLayer.pixelBufferAttributes = isTransparent
-            ? Self.transparentPixelBufferAttributes : nil
-        
-        if let rate = player?.rate, rate > 0 {
-            player?.pause()
-            player?.play()
-        }
+        let pixelBufferAttributes = isTransparent ? Self.transparentPixelBufferAttributes : nil
+        playerView.playerLayer.pixelBufferAttributes = pixelBufferAttributes
     }
 }
 

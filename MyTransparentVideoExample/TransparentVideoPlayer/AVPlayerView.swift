@@ -19,16 +19,8 @@ public class AVPlayerView: UIView {
         return layer as! AVPlayerLayer
     }
 
-    public private(set) var player: AVPlayer? {
+    public var player: AVPlayer? {
         set { playerLayer.player = newValue }
         get { return playerLayer.player }
-    }
-    
-    public func setPlayer(_ player: AVPlayer) {
-        self.player = player
-    }
-
-    public func removePlayer() {
-        self.player = nil
     }
 }

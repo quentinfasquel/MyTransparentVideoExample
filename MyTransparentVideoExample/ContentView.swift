@@ -22,41 +22,40 @@ struct ContentView: View {
     }
 
     @State var isTransparencyEnabled: Bool = false
-    
-    func toggleTransparency() {
-        isTransparencyEnabled = !isTransparencyEnabled
-    }
-
-    func getToggleButton() -> some View {
-        Button(action: toggleTransparency) {
-            Text("Toggle Transparency")
-                .padding(10)
-                .font(Font.callout.bold())
-                .foregroundColor(.white)
-                .background(Color.white.opacity(0.5))
-                .cornerRadius(10)
-        }
-    }
 
     var body: some View {
         ZStack {
             AnimatingColorView()
                 .edgesIgnoringSafeArea(.all)
-            VStack {
-                if isTransparencyEnabled {
-                    PlayerView(player: player, isTransparent: true)
+            VStack(spacing: 20) {
+                PlayerView(player: player, isTransparent: isTransparencyEnabled)
                     .frame(width: 300, height: 187, alignment: .center)
                     .onAppear { self.player.play() }
-                } else {
-                    PlayerView(player: player, isTransparent: false)
-                    .frame(width: 300, height: 187, alignment: .center)
-                    .onAppear { self.player.play() }
-                }
-                getToggleButton()
+                getToggleTransparencyButton()
             }
         }
     }
+
+    // MARK: - Private Methods
+    
+    private func toggleTransparency() {
+        isTransparencyEnabled.toggle()
+    }
+
+    private func getToggleTransparencyButton() -> some View {
+        Button(action: toggleTransparency) {
+            Text("Toggle Transparency")
+                .padding(10)
+                .font(Font.callout.bold())
+                .shadow(radius: 2)
+                .foregroundColor(.white)
+                .background(Color.white.opacity(0.5))
+                .cornerRadius(10)
+        }
+    }
 }
+
+// MARK: - Preview
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
