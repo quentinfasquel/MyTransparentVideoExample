@@ -1,5 +1,5 @@
 //
-//  ChromaKeyFilter.swift
+//  AlphaFrameFilter.swift
 //  MyTransparentVideoExample
 //
 //  Created by Quentin on 27/10/2017.

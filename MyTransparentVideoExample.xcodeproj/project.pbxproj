@@ -19,12 +19,14 @@
 		66E0467B242E85320096DEE5 /* AlphaFrameFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */; };
 		66E04680242ECABB0096DEE5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E0467E242ECABB0096DEE5 /* ContentView.swift */; };
 		66E04681242ECABB0096DEE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */; };
+		66E04686242ECC600096DEE5 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E04685242ECC600096DEE5 /* PlayerView.swift */; };
+		66E9D18D242ED36500DFC332 /* TransparentVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9D18C242ED36500DFC332 /* TransparentVideo.swift */; };
+		66E9D18F242ED76A00DFC332 /* AnimatingColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9D18E242ED76A00DFC332 /* AnimatingColorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		667F4C7A1FA3068900F9A900 /* MyTransparentVideoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyTransparentVideoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		667F4C7D1FA3068900F9A900 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		667F4C7F1FA3068900F9A900 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		667F4C821FA3068900F9A900 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		667F4C841FA3068900F9A900 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		667F4C871FA3068900F9A900 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +40,9 @@
 		66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AlphaFrameFilter.metal; sourceTree = "<group>"; };
 		66E0467E242ECABB0096DEE5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		66E04685242ECC600096DEE5 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		66E9D18C242ED36500DFC332 /* TransparentVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentVideo.swift; sourceTree = "<group>"; };
+		66E9D18E242ED76A00DFC332 /* AnimatingColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingColorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,23 +75,65 @@
 		667F4C7C1FA3068900F9A900 /* MyTransparentVideoExample */ = {
 			isa = PBXGroup;
 			children = (
-				6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */,
-				66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */,
-				667F4C911FA3126A00F9A900 /* AlphaFrameFilter.swift */,
-				669678FA242E7BF00085D444 /* AVAsset+VideoSize.swift */,
-				667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */,
+				66E9D191242EE12C00DFC332 /* TransparentVideoPlayer */,
+				66E04684242ECC4B0096DEE5 /* Views */,
 				667F4C7D1FA3068900F9A900 /* AppDelegate.swift */,
+				66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */,
+				66E0467E242ECABB0096DEE5 /* ContentView.swift */,
+				66E9D193242EE16E00DFC332 /* Resources */,
+				66E9D192242EE15F00DFC332 /* Supporting Files */,
+			);
+			path = MyTransparentVideoExample;
+			sourceTree = "<group>";
+		};
+		66E04682242ECBD80096DEE5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				669678FA242E7BF00085D444 /* AVAsset+VideoSize.swift */,
 				669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */,
 				66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */,
-				667F4C7F1FA3068900F9A900 /* ViewController.swift */,
-				66E0467E242ECABB0096DEE5 /* ContentView.swift */,
-				66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		66E04684242ECC4B0096DEE5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66E9D18E242ED76A00DFC332 /* AnimatingColorView.swift */,
+				66E04685242ECC600096DEE5 /* PlayerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		66E9D191242EE12C00DFC332 /* TransparentVideoPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				66E04682242ECBD80096DEE5 /* Extensions */,
+				667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */,
+				66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */,
+				667F4C911FA3126A00F9A900 /* AlphaFrameFilter.swift */,
+				66E9D18C242ED36500DFC332 /* TransparentVideo.swift */,
+			);
+			path = TransparentVideoPlayer;
+			sourceTree = "<group>";
+		};
+		66E9D192242EE15F00DFC332 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				667F4C811FA3068900F9A900 /* Main.storyboard */,
-				667F4C841FA3068900F9A900 /* Assets.xcassets */,
 				667F4C861FA3068900F9A900 /* LaunchScreen.storyboard */,
 				667F4C891FA3068900F9A900 /* Info.plist */,
 			);
-			path = MyTransparentVideoExample;
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		66E9D193242EE16E00DFC332 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6690684A1FA3656B00598D4C /* playdoh-bat.mp4 */,
+				667F4C841FA3068900F9A900 /* Assets.xcassets */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,7 +211,10 @@
 			files = (
 				669678FB242E7BF00085D444 /* AVAsset+VideoSize.swift in Sources */,
 				667F4C901FA3071A00F9A900 /* AVPlayerView.swift in Sources */,
+				66E9D18D242ED36500DFC332 /* TransparentVideo.swift in Sources */,
 				667F4C921FA3126A00F9A900 /* AlphaFrameFilter.swift in Sources */,
+				66E04686242ECC600096DEE5 /* PlayerView.swift in Sources */,
+				66E9D18F242ED76A00DFC332 /* AnimatingColorView.swift in Sources */,
 				66E0467A242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift in Sources */,
 				66E04681242ECABB0096DEE5 /* SceneDelegate.swift in Sources */,
 				66E04680242ECABB0096DEE5 /* ContentView.swift in Sources */,

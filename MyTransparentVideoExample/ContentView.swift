@@ -6,11 +6,29 @@
 //  Copyright © 2020 Quentin Fasquel. All rights reserved.
 //
 
+import AVFoundation
 import SwiftUI
 
 struct ContentView: View {
+    let player: AVPlayer
+    let playerLooper: AVPlayerLooper
+
+    init() {
+        let url = Bundle.main.url(forResource: "playdoh-bat", withExtension: "mp4")!
+        let playerItem = createTransparentItem(url: url)
+        let queuePlayer = AVQueuePlayer(playerItem: playerItem)
+        playerLooper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+        player = queuePlayer
+    }
+
     var body: some View {
-        Color(.white)
+        ZStack {
+            AnimatingColorView()
+                .edgesIgnoringSafeArea(.all)
+            PlayerView(player: player, isTransparent: true)
+                .frame(width: 300, height: 187, alignment: .center)
+                .onAppear { self.player.play() }
+        }
     }
 }
 
