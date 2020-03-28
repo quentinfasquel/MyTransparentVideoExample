@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		667F4C7E1FA3068900F9A900 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F4C7D1FA3068900F9A900 /* AppDelegate.swift */; };
-		667F4C801FA3068900F9A900 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F4C7F1FA3068900F9A900 /* ViewController.swift */; };
-		667F4C831FA3068900F9A900 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667F4C811FA3068900F9A900 /* Main.storyboard */; };
 		667F4C851FA3068900F9A900 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 667F4C841FA3068900F9A900 /* Assets.xcassets */; };
 		667F4C881FA3068900F9A900 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 667F4C861FA3068900F9A900 /* LaunchScreen.storyboard */; };
 		667F4C901FA3071A00F9A900 /* AVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 667F4C8F1FA3071A00F9A900 /* AVPlayerView.swift */; };
@@ -19,6 +17,8 @@
 		669678FD242E7CFB0085D444 /* CIImage+VerticalSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */; };
 		66E0467A242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */; };
 		66E0467B242E85320096DEE5 /* AlphaFrameFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */; };
+		66E04680242ECABB0096DEE5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E0467E242ECABB0096DEE5 /* ContentView.swift */; };
+		66E04681242ECABB0096DEE5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +36,8 @@
 		669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIImage+VerticalSplit.swift"; sourceTree = "<group>"; };
 		66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CIKernel+DefaultMetalLibrary.swift"; sourceTree = "<group>"; };
 		66E04679242E85320096DEE5 /* AlphaFrameFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AlphaFrameFilter.metal; sourceTree = "<group>"; };
+		66E0467E242ECABB0096DEE5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,8 @@
 				669678FC242E7CFB0085D444 /* CIImage+VerticalSplit.swift */,
 				66E04678242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift */,
 				667F4C7F1FA3068900F9A900 /* ViewController.swift */,
+				66E0467E242ECABB0096DEE5 /* ContentView.swift */,
+				66E0467F242ECABB0096DEE5 /* SceneDelegate.swift */,
 				667F4C811FA3068900F9A900 /* Main.storyboard */,
 				667F4C841FA3068900F9A900 /* Assets.xcassets */,
 				667F4C861FA3068900F9A900 /* LaunchScreen.storyboard */,
@@ -148,7 +152,6 @@
 				667F4C881FA3068900F9A900 /* LaunchScreen.storyboard in Resources */,
 				6690684B1FA3656B00598D4C /* playdoh-bat.mp4 in Resources */,
 				667F4C851FA3068900F9A900 /* Assets.xcassets in Resources */,
-				667F4C831FA3068900F9A900 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +166,8 @@
 				667F4C901FA3071A00F9A900 /* AVPlayerView.swift in Sources */,
 				667F4C921FA3126A00F9A900 /* AlphaFrameFilter.swift in Sources */,
 				66E0467A242E85320096DEE5 /* CIKernel+DefaultMetalLibrary.swift in Sources */,
-				667F4C801FA3068900F9A900 /* ViewController.swift in Sources */,
+				66E04681242ECABB0096DEE5 /* SceneDelegate.swift in Sources */,
+				66E04680242ECABB0096DEE5 /* ContentView.swift in Sources */,
 				669678FD242E7CFB0085D444 /* CIImage+VerticalSplit.swift in Sources */,
 				66E0467B242E85320096DEE5 /* AlphaFrameFilter.metal in Sources */,
 				667F4C7E1FA3068900F9A900 /* AppDelegate.swift in Sources */,
@@ -314,6 +318,7 @@
 					CI_SILENCE_GL_DEPRECATION,
 				);
 				INFOPLIST_FILE = MyTransparentVideoExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTLLINKER_FLAGS = "-cikernel";
 				MTL_COMPILER_FLAGS = "-fcikernel";
@@ -336,6 +341,7 @@
 					CI_SILENCE_GL_DEPRECATION,
 				);
 				INFOPLIST_FILE = MyTransparentVideoExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTLLINKER_FLAGS = "-cikernel";
 				MTL_COMPILER_FLAGS = "-fcikernel";
